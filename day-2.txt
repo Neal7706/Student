@@ -1,0 +1,78 @@
+SQL> desc Books;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BOOK_ID                                   NOT NULL NUMBER(38)
+ TITLE                                     NOT NULL VARCHAR2(200)
+ AUTHOR                                             VARCHAR2(100)
+ PUBLISHED_YEAR                                     NUMBER(38)
+ GENRE                                              VARCHAR2(50)
+
+SQL> desc Members;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ MEMBER_ID                                 NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(100)
+ EMAIL                                              VARCHAR2(100)
+ PHONE                                              VARCHAR2(15)
+ JOIN_DATE                                          DATE
+
+SQL> INSERT INTO Members (member_id, name, email, phone, join_date)
+  2  VALUES (1, 'Rahul Sharma', 'rahul@gmail.com', '9876543210', TO_DATE('2025-01-10','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Members (member_id, name, email, phone, join_date)
+  2  VALUES (2, 'Sneha Patil', 'sneha@gmail.com', '9123456780', TO_DATE('2025-02-15','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO Books (book_id, title, author, published_year, genre)
+  2  VALUES (1, 'Introduction to SQL', 'John Doe', 2020, 'Education');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Books (book_id, title, author, published_year, genre)
+  2  VALUES (2, 'Learning Python', 'Jane Smith', 2021, 'Programming');
+
+1 row created.
+
+SQL> INSERT INTO Staff (staff_id, name, role, hire_date)
+  2  VALUES (1, 'Anil Kumar', 'Librarian', TO_DATE('2022-03-01','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Staff (staff_id, name, role, hire_date)
+  2  VALUES (2, 'Soham Desai', 'Assistant', TO_DATE('2023-06-15','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO Loans (loan_id, member_id, book_id, staff_id, loan_date, return_date)
+  2  VALUES (1, 1, 1, 1, TO_DATE('2025-09-20','YYYY-MM-DD'), TO_DATE('2025-09-27','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Loans (loan_id, member_id, book_id, staff_id, loan_date, return_date)
+  2  VALUES (2, 2, 2, 2, TO_DATE('2025-09-21','YYYY-MM-DD'), TO_DATE('2025-09-28','YYYY-MM-DD'));
+
+1 row created.
+
+SQL> 	INSERT INTO Fines (fine_id, loan_id, amount, paid)
+  2  VALUES (1, 1, 50.00, 'N');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Fines (fine_id, loan_id, amount, paid)
+  2  VALUES (2, 2, 75.00, 'Y');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;
