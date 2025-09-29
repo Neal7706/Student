@@ -1,0 +1,112 @@
+SQL> CREATE TABLE Customers (
+  2      customer_id INT PRIMARY KEY,
+  3      name VARCHAR(100) NOT NULL,
+  4      email VARCHAR(100) UNIQUE,
+  5      phone VARCHAR(15),
+  6      address VARCHAR(200)
+  7  );
+
+Table created.
+
+SQL> CREATE TABLE Orders (
+  2      order_id INT PRIMARY KEY,
+  3      order_date DATE NOT NULL,
+  4      amount DECIMAL(10,2),
+  5      customer_id INT,
+  6      FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+  7  );
+
+Table created.
+
+SQL> INSERT INTO Customers VALUES (101, 'Alice', 'alice@mail.com', '9876543210', 'New York');
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES (102, 'Bob', 'bob@mail.com', '9876501234', 'Los Angeles');
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES (103, 'Charlie', 'charlie@mail.com', '9876598765', 'Chicago');
+
+1 row created.
+
+SQL> INSERT INTO Customers VALUES (104, 'David', 'david@mail.com', '9876512345', 'Houston');
+
+1 row created.
+
+SQL> INSERT INTO Orders VALUES (201, TO_DATE('20-09-2025', 'DD-MM-YYYY'), 250.00, 101);
+
+1 row created.
+
+SQL> INSERT INTO Orders VALUES (202, TO_DATE('21-09-2025', 'DD-MM-YYYY'), 500.00, 101);
+
+1 row created.
+
+SQL> INSERT INTO Orders VALUES (203, TO_DATE('22-09-2025', 'DD-MM-YYYY'), 300.00, 102);
+
+1 row created.
+
+SQL> INSERT INTO Orders VALUES (204, TO_DATE('23-09-2025', 'DD-MM-YYYY'), 150.00, 103);
+
+1 row created.
+                                                                         
+
+SQL> set linesize 300;
+SQL> SELECT c.customer_id, c.name, o.order_id, o.amount
+  2  FROM Customers c
+  3  INNER JOIN Orders o
+  4      ON c.customer_id = o.customer_id;
+
+CUSTOMER_ID NAME                                                                                                   ORDER_ID     AMOUNT                                                                                                                                                                      
+----------- ---------------------------------------------------------------------------------------------------- ---------- ----------                                                                                                                                                                      
+        101 Alice                                                                                                       201        250                                                                                                                                                                      
+        101 Alice                                                                                                       202        500                                                                                                                                                                      
+        102 Bob                                                                                                         203        300                                                                                                                                                                      
+        103 Charlie                                                                                                     204        150                                                                                                                                                                      
+
+SQL> set linesize 300;
+SQL> SELECT c.customer_id, c.name, o.order_id, o.amount
+  2  FROM Customers c
+  3  LEFT JOIN Orders o
+  4      ON c.customer_id = o.customer_id;
+
+CUSTOMER_ID NAME                                                                                                   ORDER_ID     AMOUNT                                                                                                                                                                      
+----------- ---------------------------------------------------------------------------------------------------- ---------- ----------                                                                                                                                                                      
+        101 Alice                                                                                                       201        250                                                                                                                                                                      
+        101 Alice                                                                                                       202        500                                                                                                                                                                      
+        102 Bob                                                                                                         203        300                                                                                                                                                                      
+        103 Charlie                                                                                                     204        150                                                                                                                                                                      
+        104 David                                                                                                                                                                                                                                                                                           
+
+SQL> set linesize 300;
+SQL> SELECT c.customer_id, c.name, o.order_id, o.amount
+  2  FROM Customers c
+  3  RIGHT JOIN Orders o
+  4      ON c.customer_id = o.customer_id;
+
+CUSTOMER_ID NAME                                                                                                   ORDER_ID     AMOUNT                                                                                                                                                                      
+----------- ---------------------------------------------------------------------------------------------------- ---------- ----------                                                                                                                                                                      
+        101 Alice                                                                                                       202        500                                                                                                                                                                      
+        101 Alice                                                                                                       201        250                                                                                                                                                                      
+        102 Bob                                                                                                         203        300                                                                                                                                                                      
+        103 Charlie                                                                                                     204        150                                                                                                                                                                      
+
+SQL> set linesize 300;
+SQL> SELECT c.customer_id, c.name, o.order_id, o.amount
+  2  FROM Customers c
+  3  FULL JOIN Orders o
+  4      ON c.customer_id = o.customer_id;
+
+CUSTOMER_ID NAME                                                                                                   ORDER_ID     AMOUNT                                                                                                                                                                      
+----------- ---------------------------------------------------------------------------------------------------- ---------- ----------                                                                                                                                                                      
+        101 Alice                                                                                                       201        250                                                                                                                                                                      
+        101 Alice                                                                                                       202        500                                                                                                                                                                      
+        102 Bob                                                                                                         203        300                                                                                                                                                                      
+        103 Charlie                                                                                                     204        150                                                                                                                                                                      
+        104 David                                                                                                                                                                                                                                                                                           
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;
